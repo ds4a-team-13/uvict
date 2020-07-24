@@ -9,8 +9,8 @@ import pandas as pd
 import json
 
 
-df = pd.read_csv('../../data/web/news_dptos.csv')
-with open('../../data/web/deptos.json') as response:
+df = pd.read_csv('data/news_dptos.csv')
+with open('data/deptos.json', encoding='utf-8') as response:
     dptos = json.load(response)
 
 data = df.groupby('departamentos').agg({'fid':'min', 'url':'size'})

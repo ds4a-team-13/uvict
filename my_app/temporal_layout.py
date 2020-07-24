@@ -4,8 +4,8 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
-df_conteo = pd.read_csv('../../data/web/conteo_noticias.csv', nrows=100)
-df = pd.read_csv('../../data/web/news_categorized.csv', nrows=100)
+df_conteo = pd.read_csv('data/conteo_noticias.csv', nrows=100)
+df = pd.read_csv('data/news_categorized.csv', nrows=100)
 df['fecha_publicacion']=pd.to_datetime(df['fecha_publicacion'])
 df['year']=df['fecha_publicacion'].dt.year
 df['week']=df['fecha_publicacion'].dt.week
