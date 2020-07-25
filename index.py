@@ -18,17 +18,9 @@ app.title='UVict'
 
 navbar = dbc.NavbarSimple(
     children=[
-        dbc.NavItem(dbc.NavLink("Analisis Temporal", href="/temporal")),
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("More pages", header=True),
-                dbc.DropdownMenuItem("Analisis espacial", href="/spatial"),
-                dbc.DropdownMenuItem("Análisis semántico", href="/semantic"),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="More",
-        ),
+        dbc.NavItem(dbc.NavLink("Revisión de noticias", href="/temporal")),
+        dbc.NavItem(dbc.NavLink("Visualización", href="/spatial")),
+        dbc.NavItem(dbc.NavLink("Exploración de categorías", href="/semantic")),
     ],
     brand="UVict", brand_href="#", color="primary", dark=True,
 )
@@ -67,4 +59,5 @@ spc.register_callbacks(app)
 sec.register_callbacks(app)
 
 if __name__ == '__main__':
-    app.run_server(host="0.0.0.0", port=8080)
+#    app.run_server(debug=True, host="0.0.0.0", port=8080)
+    app.run_server(debug=True)
