@@ -3,29 +3,33 @@ import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import plotly.express as px
 
-import geopandas as gpd
-from unidecode import unidecode
-import pandas as pd
-import json
-
-
-df = pd.read_csv('data/news_dptos.csv')
-with open('data/deptos.json', encoding='utf-8') as response:
-    dptos = json.load(response)
-
-data = df.groupby('departamentos').agg({'fid':'min', 'url':'size'})
-
-fig = px.choropleth_mapbox(data, geojson=dptos, locations='fid', color='url', featureidkey='properties.DPTO',
-                           color_continuous_scale="Viridis",
-                           range_color=(0, 5000),
-                           mapbox_style="carto-positron",
-                           zoom=4, center = {"lat": 4.90, "lon": -74.16},
-                           opacity=0.5,
-                           labels={'url':'cantidad de noticias'}
-                          )
-
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+from datetime import datetime as dt
 
 content = dbc.Container(children=[
-  dcc.Graph(figure=fig)  
+
+  dcc.Store(id='spatial_data'),
+  dcc.Store(id='dptos_data'),
+
+  html.Div(className="row", children=[
+    html.Div(className="col-1"),
+    html.Div(id='date-picker-container', className="col-5", children=[
+      html.P('Rango de fechas:'),
+      dcc.DatePickerRange(id='date-picker'),
+    ]),
+    html.Div(id='class-picker-container', className="col-5", children=[
+      dbc.Label("Clase"),
+      dcc.Dropdown(id="class-picker"),
+    ]),
+    html.Div(className="col-1"),
+  ]),
+
+  html.Div(id="main-container", className="row", children=[
+    html.Div(className="col-1"),
+    html.Div(className="col-5", children=[
+      dcc.Graph(id='map-object',)
+    ]),
+    html.Div(className="col-5", id='wordscloud'),
+    html.Div(className="col-1"),
+  ]),
+    
 ])
