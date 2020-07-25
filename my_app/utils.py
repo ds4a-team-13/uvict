@@ -32,18 +32,17 @@ def read_news():
 
     return df
 
-def crear_listado_noticias(df, categoria, semana, anho):
+def crear_listado_noticias(df, categoria, minimo, maximo):
 
-    df1 = df[df['cluster']==categoria].copy()
-    df1 = df1[df1['year']==anho]
-    df1 = df1[df1['week']==semana]
+    df = df[df['cluster']==categoria]
+    df = df[(df['fecha_publicacion'] > minimo) & (df['fecha_publicacion'] < maximo)]
 
-    if df1.shape[0] > 0:
+    if df.shape[0] > 0:
         listado = []
-        for i in range(df1.shape[0]):
-            titulo = df1['titulo'].iloc[i]
-            titulo = titulo[:20] + '...'
-            id_noticia = df1['ID'].iloc[i]
+        for i in range(df.shape[0]):
+            titulo = df['titulo'].iloc[i]
+            titulo = titulo[:30] + '...'
+            id_noticia = df['ID'].iloc[i]
             listado.append({'label':titulo, 'value':id_noticia})
     else:
         # listado = [{'label':'No se encontraron noticias', 'value':1}]
