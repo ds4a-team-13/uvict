@@ -83,9 +83,9 @@ def register_callbacks(app):
           valor = valor0
       elif valor1 != valor_lista_cat_1:
           valor = valor1
-      elif valor1 != valor_lista_cat_2:
+      elif valor2 != valor_lista_cat_2:
           valor = valor2
-      elif valor1 != valor_lista_cat_3:
+      elif valor3 != valor_lista_cat_3:
           valor = valor3
       else:
           valor = -1
