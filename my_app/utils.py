@@ -6,6 +6,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 import os
+from datetime import datetime as dt
 
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
@@ -27,20 +28,14 @@ def inicializar_analisis_temporal():
 
     return df_conteo, df1, fig, lista_news_categoria_0, lista_anhos, lista_semanas
 
+def crear_listado_noticias(categoria, minimo, maximo):
 
-def read_news():
-    path = os.path.dirname(os.path.abspath(__file__))
-    # db_path = path + '/../../data/web/'
-    # cnx = sqlite3.connect(db_path)
-    # df = pd.read_sql_query("SELECT * FROM news", cnx)
-    df = pd.read_csv(path + '/../../data/web/news_categorized.csv')
-    # df.sort_values(by='Ranking', ascending=False, inplace=True)
-
-    return df
-
-def crear_listado_noticias(df, categoria, minimo, maximo):
-
-    df = df[df['cluster']==categoria]
+    query = """
+            SELECT ID, titulo, fecha_publicacion, cluster
+            FROM featuring_all
+            WHERE cluster = """ + str(categoria)
+    df = db_get_df(query)
+    df['fecha_publicacion']=pd.to_datetime(df['fecha_publicacion'])
     df = df[(df['fecha_publicacion'] > minimo) & (df['fecha_publicacion'] < maximo)]
 
     if df.shape[0] > 0:
@@ -51,7 +46,6 @@ def crear_listado_noticias(df, categoria, minimo, maximo):
             id_noticia = df['ID'].iloc[i]
             listado.append({'label':titulo, 'value':id_noticia})
     else:
-        # listado = [{'label':'No se encontraron noticias', 'value':1}]
         listado = [{'label':'No hay noticias', 'value':-1}]
 
     return listado
@@ -64,13 +58,11 @@ def get_geojson_path():
     path = os.path.dirname(os.path.abspath(__file__))
     return path + '/../../data/web/departamentos.json'
 
-
 def db_get_df(query):
-    db_path = 'data/data_featuring.db'
-    
+    db_path = 'data/data_featuring_all.sl3'
+    # db_path = 'data/data_inicial.db'
     cnx = sqlite3.connect(db_path)
     return pd.read_sql_query(query, cnx)
-
 
 # Following code grabbed from:
 # https://towardsdatascience.com/a-complete-exploratory-data-analysis-and-visualization-for-text-data-29fb1b96fb6a
@@ -80,7 +72,7 @@ def get_top_n_words(corpus, n=1,k=1):
 
     vec = CountVectorizer(ngram_range=(k,k),stop_words=swords).fit(corpus)
     bag_of_words = vec.transform(corpus)
-    sum_words = bag_of_words.sum(axis=0) 
+    sum_words = bag_of_words.sum(axis=0)
     words_freq = [(word, sum_words[0, idx]) for word, idx in vec.vocabulary_.items()]
     words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
     return words_freq[:n]

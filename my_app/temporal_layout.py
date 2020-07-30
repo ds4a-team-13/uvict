@@ -5,11 +5,14 @@ import plotly.express as px
 import pandas as pd
 from datetime import datetime as dt
 import dash_daq as daq
+import os
+import base64
 
-# df = pd.read_csv('data/news_categorized.csv', nrows=100)
-# df['fecha_publicacion']=pd.to_datetime(df['fecha_publicacion'])
-# df['year']=df['fecha_publicacion'].dt.year
-# df['week']=df['fecha_publicacion'].dt.week
+# path = os.path.dirname(os.path.abspath(__file__))
+# imagen = path + '/imagenes/c1_logo.jpeg'
+# imagen = 'c1_logo.jpeg'
+image_filename = 'c1_logo.jpeg'
+encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 
 theme = {
     'dark': True,
@@ -23,7 +26,7 @@ lista_news_categoria_1 = []
 lista_news_categoria_2 = []
 lista_news_categoria_3 = []
 tituloNotica = "Titulo noticia"
-fechaNoticia = "Fecha noticia"
+fechaNoticia = " Fecha noticia"
 cuerpoNoticia = "Cuerpo noticia"
 urlNoticia = ""
 valor_lista_cat_0 = -1
@@ -161,7 +164,7 @@ muestra_probabilidades = dbc.Container(children=[
                 color=theme['primary'],
                 id='gauge-cat0',
                 className='dark-theme-control',
-                label="Hecho armado",
+                label="Acciones armadas",
                 units="MPH",
                 size=150),
             daq.Gauge(min=0, max=100, value=84,
@@ -197,23 +200,27 @@ muestra_probabilidades = dbc.Container(children=[
 
 content = dbc.Container(children=[
     html.Br(),
-    dbc.Row(html.H3("Exploración de noticias")),
+    dbc.Row(html.H3("Revisión de noticias")),
     html.Br(),
     dbc.Row(children=[
         dbc.Col(
             html.H5("""
-                En esta página usted puede explorar las noticias en
-                cada uno de los agrupamientos encontrados inteligentemente
-                por el sistema de clasificación automático. Al visualizar una noticia
-                se presentan las probabilidades de clasificación sugeridas, para
-                que pueda apoyarse en ellas durante su proceso de búsqueda de
-                eventos relevantes.
+                En esta página usted puede explorar las noticias que han
+                sido agrupadas inteligentemente por el sistema automático.
+                Cuando se seleccione una noticia de uno de los agrupamientos,
+                en los tacómetros se presentará una probabilidad de afinidad
+                con los cuatro tipos de hechos que son relevantes para la
+                Unidad de Víctimas, de tal manera que se facilite el proceso
+                de clasificación para la Bitácora Diaria de Eventos.
                 """,
                 style={'textAlign':'justify'}
             ),
         ),
         dbc.Col(
-            html.Img(src='imagenes/jpeg;base64,{}'.format('c1_logo'))
+            # html.Div(style={'backgroundImage': 'url(https://github.com/Slendercoder/DS4A-Dash-Draft/blob/master/c1_logo.png)'})
+            # html.Img(src='data:imagenes/png;base64,{}'.format(encoded_image))
+            html.Img(src='https://github.com/Slendercoder/DS4A-Dash-Draft/blob/master/c1_logo.png',\
+                width=200)
             )
     ]),
     html.Br(),
