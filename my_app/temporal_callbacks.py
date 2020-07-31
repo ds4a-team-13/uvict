@@ -27,18 +27,6 @@ fecha_final = dt.datetime(2020, 6, 30)
 
 def register_callbacks(app):
 
-  # Presenta la imagen del logo
-  @app.callback(Output("logo", 'children'), [Input('none', 'children')])
-  def image_logo(none):
-      return html.Img(
-        src=app.get_asset_url('logo 2.png'),
-        style={
-            "height":"150px",
-            "width": "auto",
-            "margin-bottom": "25px"
-        }
-      )
-
   # Actualiza la lista de noticias de cada categoria
   # dependiendo del rango de fechas seleccionado
   @app.callback([

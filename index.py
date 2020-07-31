@@ -7,9 +7,11 @@ from dash.dependencies import Output, Input
 import my_app.temporal_callbacks as tc
 import my_app.spatial_callbacks  as spc
 import my_app.semantic_callbacks as sec
+import my_app.home_callbacks  as hmc
 import my_app.temporal_layout as tl
 import my_app.spatial_layout  as spl
 import my_app.semantic_layout as sel
+import my_app.home_layout  as hml
 
 import datetime as dt
 
@@ -30,19 +32,19 @@ categories = dbc.Select(
 
 navbar = dbc.NavbarSimple(
     children=[
-        dbc.NavItem(dbc.NavLink("Analisis Temporal", href="/temporal")),
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("More pages", header=True),
-                dbc.DropdownMenuItem("Analisis espacial", href="/spatial", header=True),
-                dbc.DropdownMenuItem("Análisis semántico", href="/semantic", header=True),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="More",
-        ),
+        dbc.Row(
+            [
+                dbc.Col(children=[
+                    html.Div(id='none1',children=[],style={'display': 'none'}),
+                    ], id="logo1"),
+                dbc.Col(dbc.NavbarBrand("UVict", className="ml-2")),
+            ]),
+        dbc.NavItem(dbc.NavLink("Modelo Clasificación", href="/semantic")),
+        dbc.NavItem(dbc.NavLink("Revisión de noticias", href="/temporal")),
+        dbc.NavItem(dbc.NavLink("Visualización", href="/spatial")),
     ],
-    brand="UVict", brand_href="#", color="primary", dark=True,
+    # brand="UVict", brand_href="#",
+    color="primary", dark=True,
 )
 
 side_panel_layout = html.Div(
@@ -53,16 +55,11 @@ side_panel_layout = html.Div(
             id='panel-side-text',
             children=[
                 html.H3(id='panel-side-title', children='Clasificador de noticias'),
-                html.P(children=['Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
-                                  sed do eiusmod tempor incididunt ut labore et dolore magna \
-                                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation \
-                                  ullamco laboris nisi ut aliquip ex ea commodo consequat. '])
+                html.P(children=['Sistema de recomendación de noticias para la Bitácora de Eventos Diarios de la Unidad de Víctimas'])
             ]
         )
     ]
 )
-
-
 
 main_panel_layout = html.Div(
     id='panel-main',
@@ -74,7 +71,7 @@ main_panel_layout = html.Div(
 
 root_layout = dbc.Container(fluid=True, children=[
         # represents the URL bar, doesn't render anything
-        dcc.Location(id='url', refresh=False),
+        dcc.Location(id='url', refresh=False, pathname=''),
         dcc.Store(id='page_data'),
 
         navbar,
@@ -91,7 +88,17 @@ root_layout = dbc.Container(fluid=True, children=[
 
 app.layout = root_layout
 
-
+# Presenta la imagen del logo
+@app.callback(Output("logo1", 'children'), [Input('none1', 'children')])
+def image_logo(none):
+    return html.Img(
+      src=app.get_asset_url('logo 2.png'),
+      style={
+          "height":"150px",
+          "width": "auto",
+          "margin-bottom": "25px"
+      }
+    )
 
 # Activa la ventanita
 @app.callback(Output('panel-content', 'children'),
@@ -105,7 +112,7 @@ def display_page(pathname):
                 children=[tl.content]
             )
         ]
-         
+
     elif pathname == "/spatial":
         return [
             html.Div(
@@ -124,14 +131,17 @@ def display_page(pathname):
         ]
 
     return [
-            "[Insert here the home page with the project description]"
+            html.Div(
+                id='panel-content',
+                className='row',
+                children=[hml.content]
+            )
         ]
-
-
 
 tc.register_callbacks(app)
 spc.register_callbacks(app)
 sec.register_callbacks(app)
+hmc.register_callbacks(app)
 
 
 

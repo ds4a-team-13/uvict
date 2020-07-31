@@ -23,7 +23,7 @@ options_bar = html.Div(
         children=[
             html.Div(
                 className='col-2 align-middle',
-                children=['Dates range:']
+                children=['Rango de fechas:']
             ),
             html.Div(
                 className='col-4',
@@ -39,13 +39,13 @@ options_bar = html.Div(
             ),
             html.Div(
                 className='col-2 align-middle',
-                children=['Category:']
+                children=['Agrupamiento:']
             ),
             html.Div(
                 className='col-4',
                 children=[categories]
             ),
-            
+
         ]
     )
 
@@ -116,12 +116,12 @@ content = dbc.Container(children=[
           ]),
         ]
       ),
-        
-      
+
+
     ]
   )
 
-  
+
 ])
 
 """
