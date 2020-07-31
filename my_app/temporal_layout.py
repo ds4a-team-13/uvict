@@ -220,7 +220,6 @@ muestra_probabilidades = dbc.Container(children=[
 ##################################################################
 
 content = dbc.Container(children=[
-    html.Br(),
     dbc.Row(dbc.Col(html.H3("Revisión de noticias"))),
     html.Br(),
     dbc.Row(children=[
