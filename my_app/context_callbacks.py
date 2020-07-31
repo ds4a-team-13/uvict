@@ -6,7 +6,7 @@ import plotly.express as px
 
 def register_callbacks(app):
 	@app.callback(
-		Output("categories", "children"),
+		Output("categorias", "children"),
 		[
 			Input('none', 'children'),
 		],
@@ -30,8 +30,8 @@ def register_callbacks(app):
 		return html.Img(
 			src=app.get_asset_url("UMAP400_12_8.png"),
 			style={
-			"height": "600px",
-			"width": "600px",
+			"height": "400px",
+			"width": "auto",
 			"margin-bottom": "25px",
 			})
 	@app.callback(
@@ -44,8 +44,8 @@ def register_callbacks(app):
 		return html.Img(
 			src=app.get_asset_url("WordClouds400_12_8.png"),
 			style={
-			"height": "600px",
-			"width": "600px",
+			"height": "400px",
+			"width": "auto",
 			"margin-bottom": "25px",
 			})
 	@app.callback(
@@ -58,8 +58,8 @@ def register_callbacks(app):
 		return html.Img(
 			src=app.get_asset_url("Figure_boxplot.png"),
 			style={
-			"height": "400px",
-			"width": "600px",
+			"height": "300px",
+			"width": "auto",
 			"margin-bottom": "25px",
 			})
 	@app.callback(
@@ -72,7 +72,7 @@ def register_callbacks(app):
 		return html.Img(
 			src=app.get_asset_url("Figure_serie_diario1.png"),
 			style={
-			"height": "400px",
-			"width": "600px",
+			"height": "250px",
+			"width": "auto",
 			"margin-bottom": "25px",
 			})

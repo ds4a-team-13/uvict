@@ -13,7 +13,7 @@ muestra_botones = dbc.Container(children=[
         dbc.Col(
             dbc.Button("Modelo de clasificación", color="primary",\
                         className="mr-1", id="boton_modelo",\
-                        n_clicks=None, href="/semantic")
+                        n_clicks=None, href="/context")
         ),
         dbc.Col(
             dbc.Button("Revisión de noticias", color="primary",\
@@ -40,8 +40,8 @@ content = dbc.Container(children=[
                 dbc.Row(children=[
                     dbc.Col(),
                     dbc.Col(
-                    html.Div(id='none',children=[],\
-                            style={'display': 'none'}), id="logo"
+                    html.Div(id='none2',children=[],\
+                            style={'display': 'none'}), id="logo2"
                     ),
                     dbc.Col()
                 ]),

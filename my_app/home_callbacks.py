@@ -4,7 +4,7 @@ import dash_html_components as html
 def register_callbacks(app):
 
     # Presenta la imagen del logo
-    @app.callback(Output("logo", 'children'), [Input('none', 'children')])
+    @app.callback(Output("logo2", 'children'), [Input('none2', 'children')])
     def image_logo(none):
         return html.Img(
           src=app.get_asset_url('logo 2.png'),
