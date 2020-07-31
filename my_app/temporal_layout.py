@@ -117,7 +117,7 @@ muestra_categorias = dbc.Row(children=[
 muestra_seleccion_temporal = dbc.Container(children=[
     dbc.Row(children=[
         dbc.Col(children=[
-            html.H5("""
+            html.H6("""
                 Seleccione el intervalo temporal para iniciar la exploración:
                 """),
             html.Br(),
@@ -127,7 +127,7 @@ muestra_seleccion_temporal = dbc.Container(children=[
                     min_date_allowed=dt(2012, 1, 1),
                     max_date_allowed=dt(2020, 6, 30),
                     initial_visible_month=dt(2019, 1, 1),
-                    start_date=dt(2020, 1, 1).date(),
+                    start_date=dt(2020, 5, 1).date(),
                     end_date=dt(2020, 6, 1).date()
                 ),
                 html.Div(id='output-container-date-picker-range')
@@ -221,11 +221,11 @@ muestra_probabilidades = dbc.Container(children=[
 
 content = dbc.Container(children=[
     html.Br(),
-    dbc.Row(html.H3("Revisión de noticias")),
+    dbc.Row(dbc.Col(html.H3("Revisión de noticias"))),
     html.Br(),
     dbc.Row(children=[
         dbc.Col(children=[
-            html.H5("""
+            html.H6("""
                 En esta página usted puede explorar las noticias que han
                 sido agrupadas inteligentemente por el sistema automático.
                 Cuando se seleccione una noticia de uno de los agrupamientos,
@@ -239,9 +239,7 @@ content = dbc.Container(children=[
         dbc.Col(muestra_seleccion_temporal)
     ]),
     html.Br(),
-    dbc.Row(
-        muestra_categorias
-    ),
+    dbc.Row(dbc.Col(muestra_categorias)),
     html.Br(),
     dbc.Row(children=[
         dbc.Col(children=[

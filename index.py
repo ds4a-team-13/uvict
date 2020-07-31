@@ -7,11 +7,11 @@ from dash.dependencies import Output, Input
 import my_app.temporal_callbacks as tc
 import my_app.spatial_callbacks  as spc
 import my_app.semantic_callbacks as sec
-# import my_app.home_callbacks  as hmc
+import my_app.home_callbacks  as hmc
 import my_app.temporal_layout as tl
 import my_app.spatial_layout  as spl
 import my_app.semantic_layout as sel
-# import my_app.home_layout  as hml
+import my_app.home_layout  as hml
 
 import datetime as dt
 
@@ -30,21 +30,13 @@ categories = dbc.Select(
     value=-1,
 )
 
-navbar = dbc.NavbarSimple(
-    children=[
-        dbc.Row(
-            [
-                dbc.Col(children=[
-                    html.Div(id='none1',children=[],style={'display': 'none'}),
-                    ], id="logo1"),
-                dbc.Col(dbc.NavbarBrand("UVict", className="ml-2")),
-            ]),
-        dbc.NavItem(dbc.NavLink("Modelo Clasificación", href="/semantic")),
-        dbc.NavItem(dbc.NavLink("Revisión de noticias", href="/temporal")),
-        dbc.NavItem(dbc.NavLink("Visualización", href="/spatial")),
+navbar = dbc.NavbarSimple(children=[
+    dbc.Col(dbc.NavbarBrand("UVict", className="ml-2")),
+    dbc.NavItem(dbc.NavLink("Modelo de clasificación", href="/semantic")),
+    dbc.NavItem(dbc.NavLink("Revisión de noticias", href="/temporal")),
+    dbc.NavItem(dbc.NavLink("Visualización", href="/spatial"))
     ],
-    # brand="UVict", brand_href="#",
-    color="primary", dark=True,
+    color="primary", dark=True
 )
 
 side_panel_layout = html.Div(
@@ -54,8 +46,11 @@ side_panel_layout = html.Div(
         html.Div(
             id='panel-side-text',
             children=[
-                html.H3(id='panel-side-title', children='Clasificador de noticias'),
-                html.P(children=['Sistema de recomendación de noticias para la Bitácora de Eventos Diarios de la Unidad de Víctimas'])
+                dbc.Col(children=[
+                    html.Div(id='none1',children=[],style={'display': 'none'}),
+                    ], id="logo1"),
+                # html.H3(id='panel-side-title', children='Clasificador de noticias'),
+                html.P(children=['Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas'])
             ]
         )
     ]
@@ -65,7 +60,7 @@ main_panel_layout = html.Div(
     id='panel-main',
     className='col-10',
     children=[
-        html.Div( id='panel-content', className='row')
+        html.Div( id='panel-content', className='row' )
     ]
 )
 
@@ -94,9 +89,9 @@ def image_logo(none):
     return html.Img(
       src=app.get_asset_url('logo 2.png'),
       style={
-          "height":"150px",
+          "height":"100px",
           "width": "auto",
-          "margin-bottom": "25px"
+          "margin-bottom": "1px"
       }
     )
 
@@ -129,20 +124,20 @@ def display_page(pathname):
                 children=[sel.content]
             )
         ]
-
-    return [
-            "AQUI HOME"
-            # html.Div(
-            #     id='panel-content',
-            #     className='row',
-            #     children=[hml.content]
-            # )
-        ]
+    else:
+        return [
+                # "AQUI HOME"
+                html.Div(
+                    id='panel-content',
+                    className='row',
+                    children=[hml.content]
+                )
+            ]
 
 tc.register_callbacks(app)
 spc.register_callbacks(app)
 sec.register_callbacks(app)
-# hmc.register_callbacks(app)
+hmc.register_callbacks(app)
 
 
 

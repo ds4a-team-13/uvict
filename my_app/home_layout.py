@@ -10,12 +10,18 @@ import dash_bootstrap_components as dbc
 
 muestra_botones = dbc.Container(children=[
     dbc.Row(children=[
-        dbc.Button("Modelo de clasificación", color="primary",\
-                    className="mr-1", id="boton_modelo", n_clicks=None),
-        dbc.Button("Revisión de noticias", color="primary",\
-                    className="mr-1", id="boton_revision", n_clicks=None),
-        dbc.Button("Visualización", color="primary",\
-                    className="mr-1", id="boton_visualizacion", n_clicks=None)
+        dbc.Col(
+            dbc.Button("Modelo de clasificación", color="primary",\
+                        className="mr-1", id="boton_modelo", n_clicks=None)
+        ),
+        dbc.Col(
+            dbc.Button("Revisión de noticias", color="primary",\
+                        className="mr-1", id="boton_revision", n_clicks=None)
+        ),
+        dbc.Col(
+            dbc.Button("Visualización", color="primary",\
+                        className="mr-1", id="boton_visualizacion", n_clicks=None)
+        ),
     ])
 ])
 
@@ -25,18 +31,29 @@ muestra_botones = dbc.Container(children=[
 
 content = dbc.Container(children=[
     html.Br(),
-    dbc.Row(children=[
-        dbc.Col(children=[
-            html.Div(id='none',children=[],style={'display': 'none'}),
-            ], id="logo"
-            ),
-        dbc.Col("""
-            Sistema de recomendación de noticias para la Bitácora
-            de Eventos Diarios de la Unidad de Víctimas
-            """)
-    ]),
-    html.Br(),
-    dbc.Row(
-        muestra_botones
-    ),
+    html.Div(children=[
+        dbc.Row(children=[
+            dbc.Col(children=[
+                dbc.Row(children=[
+                    dbc.Col(),
+                    dbc.Col(
+                    html.Div(id='none',children=[],\
+                            style={'display': 'none'}), id="logo"
+                    ),
+                    dbc.Col()
+                ]),
+                dbc.Row(html.H5("""
+                    Sistema de recomendación de noticias para la Bitácora
+                    Diaria de Eventos de la Unidad de Víctimas
+                    """,
+                    style={'textAlign':'center'}
+                ))
+            ])
+        ]),
+        html.Br(),
+        dbc.Row(
+            muestra_botones,
+            style={'align':'center'}
+        )
+    ])
 ], style = {'height':'500vh'})
