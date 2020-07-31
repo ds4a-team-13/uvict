@@ -1,7 +1,7 @@
 from dash.dependencies import Output, Input
 from my_app.utils import *
 import pandas as pd
-
+import datetime as dt
 ###############################################################
 # VARIABLES GLOBALES
 ###############################################################
@@ -18,8 +18,8 @@ valor_lista_cat_0 = -1
 valor_lista_cat_1 = -1
 valor_lista_cat_2 = -1
 valor_lista_cat_3 = -1
-fecha_inicio = dt(2012, 1, 1),
-fecha_final = dt(2020, 6, 30)
+fecha_inicio = dt.datetime(2012, 1, 1),
+fecha_final = dt.datetime(2020, 6, 30)
 
 ###############################################################
 # CALLBACKS

@@ -21,3 +21,75 @@
 #noticia_c0 {
     color: black;
 }
+
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display|Roboto');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 100;
+  letter-spacing: 0.025rem;
+}
+
+#panel-content {
+  padding: 1rem 2rem
+}
+
+#panel-side {
+  padding: 3rem;
+  background-color: #f9f9f9;
+  border-right: 1px solid #8080805c;
+}
+
+#panel-side h2 {
+  margin-bottom: 1rem;
+}
+
+#panel-main {
+  padding: 1rem;
+}
+
+#date-picker .DateInput_input {
+  font: inherit;
+  padding: 5px;
+  text-align: center;
+}
+
+#mapContainer {
+  padding-left: 2rem;
+  padding-bottom: 1rem;
+}
+
+#options-bar {
+  padding: 1em 3em;
+}
+
+#wordscloud {
+  padding: 2rem
+}
+
+#wordscloud img {
+  width: 100%;
+}
+
+.container {
+  padding: 1rem;
+}
+
+.loader {
+  margin-top: 2rem
+}
+
+.plotContainer {
+  border: 1px solid #d4d4d4;
+  /* offset-x | offset-y | blur-radius | color */
+  box-shadow: 1px 2px 7px #9bbdfd;
+  min-height: 450px;
+}
+
+.plotContainer h4 {
+    text-align: center;
+    font-stretch: extra-condensed;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
