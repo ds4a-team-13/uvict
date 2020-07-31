@@ -141,7 +141,7 @@ def register_callbacks(app):
 
             """
 
-    data = utils.db_get_df(query)
+    data = utils.db_get_df(query).dropna()
     fig = px.line(data, x="fecha", y="noticias", color='categoria', color_discrete_map=colors)
     
     return dcc.Graph(figure=fig, config={'displayModeBar': False} )
@@ -171,7 +171,7 @@ def register_callbacks(app):
     print('>> generate_wordcloud', data)
     where_cond = utils.generate_where_cond(data)
     query = f"""
-              SELECT pre_clean_text, departamentos, url
+              SELECT text_for_embedding, departamentos, url
               FROM featuring_all  
               {where_cond}
             """
@@ -179,7 +179,7 @@ def register_callbacks(app):
     print(1)
     data = utils.db_get_df(query)
     print(2)
-    common_words = utils.get_top_n_words(data['pre_clean_text'], 100, 2)
+    common_words = utils.get_top_n_words(data['text_for_embedding'], 100, 2)
     print(4)
 
     frequencies = {x[0]:x[1] for x in common_words}
