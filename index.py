@@ -9,10 +9,12 @@ import my_app.temporal_callbacks as tc
 import my_app.spatial_callbacks  as spc
 import my_app.semantic_callbacks as sec
 import my_app.home_callbacks  as hmc
+import my_app.context_callbacks  as ctc
 import my_app.temporal_layout as tl
 import my_app.spatial_layout  as spl
 import my_app.semantic_layout as sel
 import my_app.home_layout  as hml
+import my_app.context_layout as ctl
 
 import datetime as dt
 
@@ -35,6 +37,7 @@ navbar = dbc.NavbarSimple(children=[
     dbc.Col(dbc.NavbarBrand("UVict", className="ml-2")),
     dbc.NavItem(dbc.NavLink("Modelo de clasificación", href="/semantic")),
     dbc.NavItem(dbc.NavLink("Revisión de noticias", href="/temporal")),
+    dbc.NavItem(dbc.NavLink("Contexto", href="/context")),
     dbc.NavItem(dbc.NavLink("Visualización", href="/spatial"))
     ],
     color="primary", dark=True
@@ -131,6 +134,14 @@ def display_page(pathname):
                 children=[sel.content]
             )
         ]
+    elif pathname == "/context":
+        return [
+            html.Div(
+                id='panel-content',
+                className='row',
+                children=[ctl.content]
+            )
+        ]
     else:
         return [
                 # "AQUI HOME"
@@ -145,7 +156,7 @@ tc.register_callbacks(app)
 spc.register_callbacks(app)
 sec.register_callbacks(app)
 hmc.register_callbacks(app)
-
+ctc.register_callbacks(app)
 
 
 if __name__ == '__main__':
