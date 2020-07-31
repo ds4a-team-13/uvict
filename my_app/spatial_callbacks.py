@@ -26,7 +26,7 @@ dptos_ids = {n: fid for i, n, fid in gdf[['nombre', 'DPTO']].itertuples()}
 
 
 
-with open(dptos_path) as response:
+with open(dptos_path, encoding='utf-8') as response:
     dptos = json.load(response)
 
 colors = {'identity':'#eb3b5a', 'identity':'#fa8231', 
@@ -41,36 +41,8 @@ colors = {'identity':'#4b6584', 'identity':'#a5b1c2',
           'identity':'#fa8231', 'identity':'#fc5c65',
           }
 
-def register_callbacks(app):
-  """
-  @app.callback(
-      [
-        Output('date-picker', 'min_date_allowed'), 
-        Output('date-picker', 'max_date_allowed'), 
-        Output('date-picker', 'start_date'), 
-        Output('date-picker', 'end_date'), 
-        Output('date-picker', 'initial_visible_month'), 
-      ],
-      [Input('url', 'pathname')]
-  )
-  def load_date_picker(pathname):
-      print('>> load_date_picker')
-      query = '''select min(fecha_publicacion) as min_date, 
-                 max(fecha_publicacion) as max_date from featuring_all LIMIT 1'''
-      data = utils.db_get_df(query)
-      data['min_date'] = pd.to_datetime(data['min_date'])
-      data['max_date'] = pd.to_datetime(data['max_date'])
-      
-      data = data.iloc[0]
-      initial_date = data['max_date'] - timedelta(days=10)
-      
-      return data['min_date'].date(),\
-             data['max_date'].date(),\
-             initial_date.date(),\
-             data['max_date'].date(),\
-             initial_date.date()
-  """
-
+def register_callbacks(app, df):
+  
   @app.callback(
       Output('spatial_data', 'data'), 
       [
@@ -142,28 +114,10 @@ def register_callbacks(app):
             """
 
     data = utils.db_get_df(query).dropna()
-    fig = px.line(data, x="fecha", y="noticias", color='categoria', color_discrete_map=colors)
+    """
+    fig = px.line(data, x="fecha_publicacion", y='noticias', color='category_bl', color_discrete_map=colors)
     
-    return dcc.Graph(figure=fig, config={'displayModeBar': False} )
-
-
-  @app.callback(
-    Output("categories", "children"),
-    [Input('spatial_data', 'data')],
-	)
-  def generate_categories_callback(data):
-    where_cond = utils.generate_where_cond(data)
-    query = f"""
-              SELECT category_bl as categoria,
-                     count(1) as noticias
-              FROM featuring_all
-              {where_cond}
-              GROUP BY strftime('%Y-%m-%d', fecha_publicacion), category_bl
-
-            """
-    data = utils.db_get_df(query)
-    fig = px.pie(data, values="noticias", names="categoria", color_discrete_map=colors, title='Prueba')
-    
+    print('<< generate_trends')
     return dcc.Graph(figure=fig, config={'displayModeBar': False} )
 
 
@@ -176,22 +130,16 @@ def register_callbacks(app):
               {where_cond}
             """
 
-    print(1)
     data = utils.db_get_df(query)
-    print(2)
     common_words = utils.get_top_n_words(data['text_for_embedding'], 100, 2)
-    print(4)
-
+    
     frequencies = {x[0]:x[1] for x in common_words}
-    print(5)
     wc = WordCloud(background_color='white', width=1200, height=600).generate_from_frequencies(frequencies=frequencies)
-    print(6)
     
     wc_img = wc.to_image()
-    print(7)
+    
     with BytesIO() as buffer:
         wc_img.save(buffer, 'png')
-        print(8)
         img2 = base64.b64encode(buffer.getvalue()).decode()
 
     print('<< generate_wordcloud')
@@ -231,14 +179,8 @@ def register_callbacks(app):
         mapbox_accesstoken=token,
     )
     fig.update_layout(showlegend=True)
-    """
-    fig.update_layout({
-      'plot_bgcolor': 'red',
-      'paper_bgcolor': '#1e1e1e',
-    })
-    """
-    
-    
+
+
     print('<< generate_map')
     return dcc.Graph(figure=fig, config={'displayModeBar': False}  )
 
