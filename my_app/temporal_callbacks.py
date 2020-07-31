@@ -2,7 +2,6 @@ from dash.dependencies import Output, Input
 from my_app.utils import *
 import pandas as pd
 
-
 ###############################################################
 # VARIABLES GLOBALES
 ###############################################################
@@ -22,7 +21,23 @@ valor_lista_cat_3 = -1
 fecha_inicio = dt(2012, 1, 1),
 fecha_final = dt(2020, 6, 30)
 
+###############################################################
+# CALLBACKS
+###############################################################
+
 def register_callbacks(app):
+
+  # Presenta la imagen del logo
+  @app.callback(Output("logo", 'children'), [Input('none', 'children')])
+  def image_logo(none):
+      return html.Img(
+        src=app.get_asset_url('logo 2.png'),
+        style={
+            "height":"150px",
+            "width": "auto",
+            "margin-bottom": "25px"
+        }
+      )
 
   # Actualiza la lista de noticias de cada categoria
   # dependiendo del rango de fechas seleccionado
@@ -106,7 +121,9 @@ def register_callbacks(app):
       try:
           query = """
                 SELECT ID, titulo, fecha_publicacion,
-                cuerpo, url, prob_c0, prob_c1, prob_c2, prob_c3
+                cuerpo, url, prob_hechos_contra_civil,
+                prob_acciones_armadas, prob_acciones_inst,
+                prob_otro
                 FROM featuring_all
                 WHERE ID = """ + str(valor)
           df = db_get_df(query)
@@ -114,10 +131,10 @@ def register_callbacks(app):
           fechaNoticia = df.fecha_publicacion.values[0]
           cuerpoNoticia = df.cuerpo.values[0]
           urlNoticia = df.url.values[0]
-          prob_c0 = int(df.prob_c0.values[0])
-          prob_c1 = int(df.prob_c1.values[0])
-          prob_c2 = int(df.prob_c2.values[0])
-          prob_c3 = int(df.prob_c3.values[0])
+          prob_c0 = int(df.prob_hechos_contra_civil.values[0]*100)
+          prob_c1 = int(df.prob_acciones_armadas.values[0]*100)
+          prob_c2 = int(df.prob_acciones_inst.values[0]*100)
+          prob_c3 = int(df.prob_otro.values[0]*100)
       except:
           tituloNotica = "Titulo noticia"
           fechaNoticia = "Fecha noticia"

@@ -14,29 +14,16 @@ from nltk.corpus import stopwords
 
 path = os.path.dirname(os.path.abspath(__file__))
 
-def inicializar_analisis_temporal():
-    # Método que inicializa los dataframes, figuras, y opciones
-    df_conteo = pd.read_csv('../../data/web/conteo_noticias.csv', nrows=100)
-    df1 = pd.read_csv('../../data/web/news_categorized.csv', nrows=100)
-    fig = px.line(df_conteo, x = "date_year_week", y="num_hechos",
-        title='', color = 'cluster')
-    fig.layout.plot_bgcolor = '#000000'
-    fig.layout.paper_bgcolor = '#000000'
-    lista_news_categoria_0 = []
-    lista_anhos = df_conteo.year.unique()
-    lista_semanas = range(1, 10)
-
-    return df_conteo, df1, fig, lista_news_categoria_0, lista_anhos, lista_semanas
-
 def crear_listado_noticias(categoria, minimo, maximo):
 
-    query = """
-            SELECT ID, titulo, fecha_publicacion, cluster
-            FROM featuring_all
-            WHERE cluster = """ + str(categoria)
+    data={'start_date':minimo, 'end_date': maximo, 'category':categoria}
+    where_cond = generate_where_cond(data)
+    query = f"""
+                SELECT ID, titulo, fecha_publicacion, category_bl
+                FROM featuring_all
+                {where_cond}
+            """
     df = db_get_df(query)
-    df['fecha_publicacion']=pd.to_datetime(df['fecha_publicacion'])
-    df = df[(df['fecha_publicacion'] > minimo) & (df['fecha_publicacion'] < maximo)]
 
     if df.shape[0] > 0:
         listado = []
@@ -59,8 +46,8 @@ def get_geojson_path():
     return path + '/../../data/web/departamentos.json'
 
 def db_get_df(query):
-    db_path = 'data/data_featuring_all.sl3'
-    # db_path = 'data/data_inicial.db'
+    # db_path = 'data/data_featuring_all.sl3'
+    db_path = 'data/data.db'
     cnx = sqlite3.connect(db_path)
     return pd.read_sql_query(query, cnx)
 
@@ -76,3 +63,20 @@ def get_top_n_words(corpus, n=1,k=1):
     words_freq = [(word, sum_words[0, idx]) for word, idx in vec.vocabulary_.items()]
     words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
     return words_freq[:n]
+
+def generate_where_cond(data):
+    date_start = data['start_date']
+    date_end   = data['end_date']
+    cat        = data['category']
+    dpto       = data.get('dpto_index', -1)
+
+    class_cond = f"AND category_bl = {cat}" if cat != -1 else ""
+    dpto_cond  = f"AND fid = {dpto}" if dpto != -1 else ""
+    where_cond = f"""
+          WHERE strftime('%Y-%m-%d', fecha_publicacion) >= strftime('%Y-%m-%d', \'{date_start}\')
+                AND strftime('%Y-%m-%d', fecha_publicacion) <= strftime('%Y-%m-%d', \'{date_end}\')
+                {class_cond}
+                {dpto_cond}
+        """
+
+    return where_cond

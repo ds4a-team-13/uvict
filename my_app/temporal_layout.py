@@ -11,8 +11,6 @@ import base64
 # path = os.path.dirname(os.path.abspath(__file__))
 # imagen = path + '/imagenes/c1_logo.jpeg'
 # imagen = 'c1_logo.jpeg'
-image_filename = 'c1_logo.jpeg'
-encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 
 theme = {
     'dark': True,
@@ -99,8 +97,8 @@ muestra_categorias = dbc.Row(children=[
 muestra_seleccion_temporal = dbc.Container(children=[
     dbc.Row(children=[
         dbc.Col(children=[
-            html.H6("""
-                Seleccione el intervalo temporal para iniciar la exploración.
+            html.H5("""
+                Seleccione el intervalo temporal para iniciar la exploración:
                 """),
             html.Br(),
             dbc.FormGroup([
@@ -159,6 +157,7 @@ muestra_noticia = dbc.Container(children=[
 # ESTE ES EL VISUALIZADOR DE LAS PROBABILIDADES
 muestra_probabilidades = dbc.Container(children=[
     dbc.Col(children=[
+        html.H4("Categorías de la Unidad de Víctimas"),
         dbc.Row(children=[
             daq.Gauge(min=0, max=100, value=6,
                 color=theme['primary'],
@@ -166,14 +165,14 @@ muestra_probabilidades = dbc.Container(children=[
                 className='dark-theme-control',
                 label="Acciones armadas",
                 units="MPH",
-                size=150),
+                size=120),
             daq.Gauge(min=0, max=100, value=84,
                 color=theme['primary'],
                 id='gauge-cat1',
                 className='dark-theme-control',
                 label="Acciones contra la población civil",
                 units="%",
-                size=150),
+                size=120),
         ]),
         dbc.Row(children=[
             daq.Gauge(min=0, max=100, value=20,
@@ -182,14 +181,14 @@ muestra_probabilidades = dbc.Container(children=[
                 className='dark-theme-control',
                 label="Acciones institucionales",
                 units="Km/h",
-                size=150),
+                size=120),
             daq.Gauge(min=0, max=100, value=60,
                 color=theme['primary'],
                 id='gauge-cat3',
                 className='dark-theme-control',
                 label="Otros hechos",
                 units="%",
-                size=150),
+                size=120),
         ])
     ])
 ])
@@ -216,11 +215,14 @@ content = dbc.Container(children=[
                 style={'textAlign':'justify'}
             ),
         ),
-        dbc.Col(
+        dbc.Col("       "),
+        dbc.Col(children=[
             # html.Div(style={'backgroundImage': 'url(https://github.com/Slendercoder/DS4A-Dash-Draft/blob/master/c1_logo.png)'})
             # html.Img(src='data:imagenes/png;base64,{}'.format(encoded_image))
-            html.Img(src='https://github.com/Slendercoder/DS4A-Dash-Draft/blob/master/c1_logo.png',\
-                width=200)
+            # html.Img(src='https://github.com/Slendercoder/DS4A-Dash-Draft/blob/master/c1_logo.png',\
+            #     width=200)
+            html.Div(id='none',children=[],style={'display': 'none'}),
+            ], id="logo"
             )
     ]),
     html.Br(),
