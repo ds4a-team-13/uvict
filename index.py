@@ -51,7 +51,7 @@ side_panel_layout = html.Div(
                     html.Div(id='none1',children=[],style={'display': 'none'}),
                     ], id="logo1"),
                 # html.H3(id='panel-side-title', children='Clasificador de noticias'),
-                html.P(children=['Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas']),
+                html.P(children=['<b>Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas</b>']),
                 html.Br(),
                 html.P("Desarrollado por:"),
                 html.P("Team-13"),
