@@ -23,10 +23,10 @@ categories = dbc.Select(
     id="class-picker",
     options=[
         {"label": "All", "value": -1},
-        {"label": "Conflicto armado", "value": 1},
-        {"label": "Trafico", "value": 2},
-        {"label": "Categoria 3", "value": 3},
-        {"label": "Eventos de transito", "value": 4},
+        {"label": "Narcóticos", "value": 1},
+        {"label": "Contrabando", "value": 2},
+        {"label": "Grupos armados", "value": 3},
+        {"label": "Delitos sexuales", "value": 4},
     ],
     value=-1,
 )
@@ -51,7 +51,9 @@ side_panel_layout = html.Div(
                     html.Div(id='none1',children=[],style={'display': 'none'}),
                     ], id="logo1"),
                 # html.H3(id='panel-side-title', children='Clasificador de noticias'),
-                html.P(children=['<b>Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas</b>']),
+                dcc.Markdown("""
+                    *Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas*
+                    """),
                 html.Br(),
                 html.P("Desarrollado por:"),
                 html.P("Team-13"),
