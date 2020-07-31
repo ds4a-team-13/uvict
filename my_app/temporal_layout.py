@@ -40,7 +40,7 @@ valor_lista_cat_3 = -1
 muestra_categorias = dbc.Row(children=[
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 1"),
+        html.H5("Narcóticos"),
         html.Div(children=[
             dcc.Loading(
               id="loading-0",
@@ -58,7 +58,7 @@ muestra_categorias = dbc.Row(children=[
     ]),
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 2"),
+        html.H5("Contrabando"),
         html.Div(children=[
             dcc.Loading(
               id="loading-1",
@@ -76,7 +76,7 @@ muestra_categorias = dbc.Row(children=[
     ]),
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 3"),
+        html.H5("Grupos armados"),
         html.Div(children=[
             dcc.Loading(
               id="loading-2",
@@ -94,7 +94,7 @@ muestra_categorias = dbc.Row(children=[
     ]),
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 4"),
+        html.H5("Delitos sexuales"),
         html.Div(children=[
             dcc.Loading(
               id="loading-3",
