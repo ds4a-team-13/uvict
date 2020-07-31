@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
@@ -23,9 +24,9 @@ categories = dbc.Select(
     options=[
         {"label": "All", "value": -1},
         {"label": "Conflicto armado", "value": 1},
-        {"label": "Tráfico", "value": 2},
-        {"label": "Categoría 3", "value": 3},
-        {"label": "Eventos de tránsito", "value": 4},
+        {"label": "Trafico", "value": 2},
+        {"label": "Categoria 3", "value": 3},
+        {"label": "Eventos de transito", "value": 4},
     ],
     value=-1,
 )
@@ -50,7 +51,11 @@ side_panel_layout = html.Div(
                     html.Div(id='none1',children=[],style={'display': 'none'}),
                     ], id="logo1"),
                 # html.H3(id='panel-side-title', children='Clasificador de noticias'),
-                html.P(children=['Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas'])
+                html.P(children=['Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas']),
+                html.Br(),
+                html.P("Desarrollado por:"),
+                html.P("Team-13"),
+                html.P("DS4A Colombia 2020"),
             ]
         )
     ]

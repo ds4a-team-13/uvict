@@ -12,15 +12,18 @@ muestra_botones = dbc.Container(children=[
     dbc.Row(children=[
         dbc.Col(
             dbc.Button("Modelo de clasificación", color="primary",\
-                        className="mr-1", id="boton_modelo", n_clicks=None)
+                        className="mr-1", id="boton_modelo",\
+                        n_clicks=None, href="/semantic")
         ),
         dbc.Col(
             dbc.Button("Revisión de noticias", color="primary",\
-                        className="mr-1", id="boton_revision", n_clicks=None)
+                        className="mr-1", id="boton_revision",\
+                        n_clicks=None, href="/temporal")
         ),
         dbc.Col(
             dbc.Button("Visualización", color="primary",\
-                        className="mr-1", id="boton_visualizacion", n_clicks=None)
+                        className="mr-1", id="boton_visualizacion",\
+                        n_clicks=None, href="/spatial")
         ),
     ])
 ])
