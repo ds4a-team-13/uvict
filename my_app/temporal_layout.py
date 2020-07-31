@@ -179,7 +179,7 @@ muestra_probabilidades = dbc.Container(children=[
     dbc.Col(children=[
         html.H4("Categorías de la Unidad de Víctimas"),
         dbc.Row(children=[
-            daq.Gauge(min=0, max=100, value=6,
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat0',
                 className='dark-theme-control',
@@ -187,7 +187,7 @@ muestra_probabilidades = dbc.Container(children=[
                 units="MPH",
                 size=120),
             dbc.Col("", width=1),
-            daq.Gauge(min=0, max=100, value=84,
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat1',
                 className='dark-theme-control',
@@ -196,7 +196,7 @@ muestra_probabilidades = dbc.Container(children=[
                 size=120),
         ]),
         dbc.Row(children=[
-            daq.Gauge(min=0, max=100, value=20,
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat2',
                 className='dark-theme-control',
@@ -204,7 +204,7 @@ muestra_probabilidades = dbc.Container(children=[
                 units="Km/h",
                 size=120),
             dbc.Col("", width=2),
-            daq.Gauge(min=0, max=100, value=60,
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat3',
                 className='dark-theme-control',

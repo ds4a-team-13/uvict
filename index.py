@@ -52,7 +52,7 @@ side_panel_layout = html.Div(
                     ], id="logo1"),
                 # html.H3(id='panel-side-title', children='Clasificador de noticias'),
                 dcc.Markdown("""
-                    *Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas*
+                    **Sistema de recomendación de noticias para la Bitácora Diaria de Eventos de la Unidad de Víctimas**
                     """),
                 html.Br(),
                 html.P("Desarrollado por:"),
