@@ -7,11 +7,11 @@ from dash.dependencies import Output, Input
 import my_app.temporal_callbacks as tc
 import my_app.spatial_callbacks  as spc
 import my_app.semantic_callbacks as sec
-import my_app.home_callbacks  as hmc
+# import my_app.home_callbacks  as hmc
 import my_app.temporal_layout as tl
 import my_app.spatial_layout  as spl
 import my_app.semantic_layout as sel
-import my_app.home_layout  as hml
+# import my_app.home_layout  as hml
 
 import datetime as dt
 
@@ -71,7 +71,7 @@ main_panel_layout = html.Div(
 
 root_layout = dbc.Container(fluid=True, children=[
         # represents the URL bar, doesn't render anything
-        dcc.Location(id='url', refresh=False, pathname=''),
+        dcc.Location(id='url', refresh=False),
         dcc.Store(id='page_data'),
 
         navbar,
@@ -131,17 +131,18 @@ def display_page(pathname):
         ]
 
     return [
-            html.Div(
-                id='panel-content',
-                className='row',
-                children=[hml.content]
-            )
+            "AQUI HOME"
+            # html.Div(
+            #     id='panel-content',
+            #     className='row',
+            #     children=[hml.content]
+            # )
         ]
 
 tc.register_callbacks(app)
 spc.register_callbacks(app)
 sec.register_callbacks(app)
-hmc.register_callbacks(app)
+# hmc.register_callbacks(app)
 
 
 
