@@ -87,7 +87,12 @@ content = dbc.Container(children=[
               id="loading-3",
               className='loader',
               type="default",
-              children=html.Div(id='map-object',)
+              children=html.Div(
+                dcc.Graph(
+                  id='map-object', 
+                  config={'displayModeBar': False}
+                  )
+              )
             ),
           ])
         ]

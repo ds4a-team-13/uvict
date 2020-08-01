@@ -52,15 +52,15 @@ def register_callbacks(app):
         Input('date-picker', 'start_date'), 
         Input('date-picker', 'end_date'), 
         Input('class-picker', 'value'),
-        Input('map-object', 'plotly_click'),
+        #Input('map-object', 'clickData'),
         Input('url', 'href')
       ]
   )
-  def initialize_selected_dpt(start_date, end_date, category, clickData, pathname):
+  def initialize_selected_dpt(start_date, end_date, category, pathname):
     ctx = dash.callback_context
     data = {}
     print('>> seting data')
-    print(ctx.triggered)
+    #print(ctx.triggered)
     
     triggers = [x['prop_id'] for x in ctx.triggered]
     
@@ -78,7 +78,6 @@ def register_callbacks(app):
       idx = clickData['points'][0]['pointIndex']
       data['dpto_index'] = idx
     
-    print(data)
     return data
 
   @app.callback(
@@ -91,7 +90,7 @@ def register_callbacks(app):
   
 
   @app.callback(
-      Output("map-object", "children"),
+      Output("map-object", "figure"),
       [Input('spatial_data', 'data')],
 	)
   def generate_map_callback(data):
@@ -103,8 +102,6 @@ def register_callbacks(app):
     [Input('spatial_data', 'data')],
 	)
   def generate_title(data):
-    print(data['start_date'])
-    
     date1 = dt.strptime(data['start_date'], "%Y-%m-%d")
     date2 = dt.strptime(data['end_date'], "%Y-%m-%d")
     title = 'Noticias del {} al {}'.format(date1.strftime('%d de %B de %Y'), date2.strftime("%d de %B de %Y"))
@@ -127,11 +124,12 @@ def register_callbacks(app):
 
             """
 
-    data = utils.db_get_df(query).dropna()
+    data = utils.db_get_df(query)
+    data = data.dropna()
+    
     fig = px.line(data, x="fecha", y='noticias', color='categoria', color_discrete_map=colors)
 
-    graph = dcc.Graph(figure=fig, config={'displayModeBar': False} )
-    return graph
+    return dcc.Graph(figure=fig, config={'displayModeBar': False}  )
 
 
   def generate_wordcloud(data):
@@ -197,7 +195,7 @@ def register_callbacks(app):
 
 
     print('<< generate_map')
-    return dcc.Graph(figure=fig, config={'displayModeBar': False}  )
+    return fig
 
 
   def proccess_dptos(data):
