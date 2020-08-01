@@ -18,7 +18,8 @@ import dash
 from dash.exceptions import PreventUpdate
 from collections import Counter
 import locale
-locale.setlocale(locale.LC_TIME, '')
+
+locale.setlocale(local.LC_TIME, 'es_ES')
 
 import my_app.utils as utils
 
@@ -57,6 +58,7 @@ def register_callbacks(app):
       ]
   )
   def initialize_selected_dpt(start_date, end_date, category, pathname):
+    print(pathname)
     ctx = dash.callback_context
     data = {}
     print('>> seting data')
