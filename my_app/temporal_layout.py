@@ -40,52 +40,72 @@ valor_lista_cat_3 = -1
 muestra_categorias = dbc.Row(children=[
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 1"),
+        html.H5("Narcóticos"),
         html.Div(children=[
-        dbc.RadioItems(options=lista_news_categoria_0,
-            id="noticias_categoria_0",
-            style={"overflow":"scroll","height":200},
-            value=valor_lista_cat_0
-        )
+            dcc.Loading(
+              id="loading-0",
+              className='loader',
+              type="default",
+              children=dbc.RadioItems(options=lista_news_categoria_0,
+                          id="noticias_categoria_0",
+                          style={"overflow":"scroll","height":200},
+                          value=valor_lista_cat_0
+                      )
+            )
         ], style={'border':'4px black solid',
                 'border-color': '#375A80'
                 }),
     ]),
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 2"),
+        html.H5("Contrabando"),
         html.Div(children=[
-        dbc.RadioItems(options=lista_news_categoria_0,
-            id="noticias_categoria_1",
-            style={"overflow":"scroll","height":200},
-            value=valor_lista_cat_1
-        )
+            dcc.Loading(
+              id="loading-1",
+              className='loader',
+              type="default",
+              children=dbc.RadioItems(options=lista_news_categoria_1,
+                          id="noticias_categoria_1",
+                          style={"overflow":"scroll","height":200},
+                          value=valor_lista_cat_1
+                      )
+            )
         ], style={'border':'4px black solid',
                 'border-color': '#375A80'
                 }),
     ]),
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 3"),
+        html.H5("Grupos armados"),
         html.Div(children=[
-        dbc.RadioItems(options=lista_news_categoria_0,
-            id="noticias_categoria_2",
-            style={"overflow":"scroll","height":200},
-            value=valor_lista_cat_2
-        )
+            dcc.Loading(
+              id="loading-2",
+              className='loader',
+              type="default",
+              children=dbc.RadioItems(options=lista_news_categoria_2,
+                          id="noticias_categoria_2",
+                          style={"overflow":"scroll","height":200},
+                          value=valor_lista_cat_2
+                      )
+            )
         ], style={'border':'4px black solid',
                 'border-color': '#375A80'
                 }),
     ]),
     dbc.Col(children=[
         html.Br(),
-        html.H5("Agrupamiento 4"),
+        html.H5("Delitos sexuales"),
         html.Div(children=[
-        dbc.RadioItems(options=lista_news_categoria_0,
-            id="noticias_categoria_3",
-            style={"overflow":"scroll","height":200},
-            value=valor_lista_cat_3
-        )
+            dcc.Loading(
+              id="loading-3",
+              className='loader',
+              type="default",
+              children=dbc.RadioItems(options=lista_news_categoria_3,
+                          id="noticias_categoria_3",
+                          style={"overflow":"scroll","height":200},
+                          value=valor_lista_cat_3
+                      )
+            )
         ], style={'border':'4px black solid',
                 'border-color': '#375A80'
                 }),
@@ -97,7 +117,7 @@ muestra_categorias = dbc.Row(children=[
 muestra_seleccion_temporal = dbc.Container(children=[
     dbc.Row(children=[
         dbc.Col(children=[
-            html.H5("""
+            html.H6("""
                 Seleccione el intervalo temporal para iniciar la exploración:
                 """),
             html.Br(),
@@ -107,8 +127,8 @@ muestra_seleccion_temporal = dbc.Container(children=[
                     min_date_allowed=dt(2012, 1, 1),
                     max_date_allowed=dt(2020, 6, 30),
                     initial_visible_month=dt(2019, 1, 1),
-                    start_date=dt(2018, 12, 1).date(),
-                    end_date=dt(2019, 1, 7).date()
+                    start_date=dt(2020, 5, 1).date(),
+                    end_date=dt(2020, 6, 1).date()
                 ),
                 html.Div(id='output-container-date-picker-range')
             ]),
@@ -159,30 +179,32 @@ muestra_probabilidades = dbc.Container(children=[
     dbc.Col(children=[
         html.H4("Categorías de la Unidad de Víctimas"),
         dbc.Row(children=[
-            daq.Gauge(min=0, max=100, value=6,
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat0',
                 className='dark-theme-control',
                 label="Acciones armadas",
                 units="MPH",
                 size=120),
-            daq.Gauge(min=0, max=100, value=84,
+            dbc.Col("", width=1),
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat1',
                 className='dark-theme-control',
-                label="Acciones contra la población civil",
+                label=f"Acciones contra \nla población civil",
                 units="%",
                 size=120),
         ]),
         dbc.Row(children=[
-            daq.Gauge(min=0, max=100, value=20,
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat2',
                 className='dark-theme-control',
                 label="Acciones institucionales",
                 units="Km/h",
                 size=120),
-            daq.Gauge(min=0, max=100, value=60,
+            dbc.Col("", width=2),
+            daq.Gauge(min=0, max=100, value=0,
                 color=theme['primary'],
                 id='gauge-cat3',
                 className='dark-theme-control',
@@ -198,12 +220,11 @@ muestra_probabilidades = dbc.Container(children=[
 ##################################################################
 
 content = dbc.Container(children=[
-    html.Br(),
-    dbc.Row(html.H3("Revisión de noticias")),
+    dbc.Row(dbc.Col(html.H3("Revisión de noticias"))),
     html.Br(),
     dbc.Row(children=[
-        dbc.Col(
-            html.H5("""
+        dbc.Col(children=[
+            html.H6("""
                 En esta página usted puede explorar las noticias que han
                 sido agrupadas inteligentemente por el sistema automático.
                 Cuando se seleccione una noticia de uno de los agrupamientos,
@@ -213,25 +234,11 @@ content = dbc.Container(children=[
                 de clasificación para la Bitácora Diaria de Eventos.
                 """,
                 style={'textAlign':'justify'}
-            ),
-        ),
-        dbc.Col("       "),
-        dbc.Col(children=[
-            # html.Div(style={'backgroundImage': 'url(https://github.com/Slendercoder/DS4A-Dash-Draft/blob/master/c1_logo.png)'})
-            # html.Img(src='data:imagenes/png;base64,{}'.format(encoded_image))
-            # html.Img(src='https://github.com/Slendercoder/DS4A-Dash-Draft/blob/master/c1_logo.png',\
-            #     width=200)
-            html.Div(id='none',children=[],style={'display': 'none'}),
-            ], id="logo"
-            )
+            )], width=6),
+        dbc.Col(muestra_seleccion_temporal)
     ]),
     html.Br(),
-    dbc.Row(
-        muestra_seleccion_temporal
-    ),
-    dbc.Row(
-        muestra_categorias
-    ),
+    dbc.Row(dbc.Col(muestra_categorias)),
     html.Br(),
     dbc.Row(children=[
         dbc.Col(children=[

@@ -106,7 +106,7 @@ def register_callbacks(app):
     print(data['start_date'])
     
     date1, date2 = dt.strptime(data['start_date'], "%Y-%m-%dT00:00:00"),  dt.strptime(data['end_date'], "%Y-%m-%dT00:00:00")
-    title = 'Noticias publicadas del {} al {}'.format(date1.strftime('%d de %B de %Y'), date2.strftime("%d de %B de %Y"))
+    title = 'Noticias del {} al {}'.format(date1.strftime('%d de %B de %Y'), date2.strftime("%d de %B de %Y"))
     
     return title
 
