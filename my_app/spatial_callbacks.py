@@ -16,6 +16,7 @@ import random, json
 import base64
 import dash
 from dash.exceptions import PreventUpdate
+from collections import Counter
 import locale
 locale.setlocale(locale.LC_TIME, '')
 
@@ -51,12 +52,11 @@ def register_callbacks(app):
         Input('date-picker', 'start_date'), 
         Input('date-picker', 'end_date'), 
         Input('class-picker', 'value'),
-        Input('map-object', 'clickData'),
-        Input('dptos_data', 'data'),
+        Input('map-object', 'plotly_click'),
         Input('url', 'href')
       ]
   )
-  def initialize_selected_dpt(start_date, end_date, category, clickData, dptosData, pathname):
+  def initialize_selected_dpt(start_date, end_date, category, clickData, pathname):
     ctx = dash.callback_context
     data = {}
     print('>> seting data')
@@ -105,7 +105,8 @@ def register_callbacks(app):
   def generate_title(data):
     print(data['start_date'])
     
-    date1, date2 = dt.strptime(data['start_date'], "%Y-%m-%dT00:00:00"),  dt.strptime(data['end_date'], "%Y-%m-%dT00:00:00")
+    date1 = dt.strptime(data['start_date'], "%Y-%m-%d")
+    date2 = dt.strptime(data['end_date'], "%Y-%m-%d")
     title = 'Noticias del {} al {}'.format(date1.strftime('%d de %B de %Y'), date2.strftime("%d de %B de %Y"))
     
     return title
@@ -137,16 +138,18 @@ def register_callbacks(app):
     print('>> generate_wordcloud', data)
     where_cond = utils.generate_where_cond(data)
     query = f"""
-              SELECT text_for_embedding, departamentos, url
+              SELECT counts, departamentos, url
               FROM featuring_all  
               {where_cond}
             """
 
     data = utils.db_get_df(query)
-    common_words = utils.get_top_n_words(data['text_for_embedding'], 100, 2)
-    
-    frequencies = {x[0]:x[1] for x in common_words}
-    wc = WordCloud(background_color='white', width=1200, height=600).generate_from_frequencies(frequencies=frequencies)
+    print("noticias: ", data.shape[0])
+    counts = Counter()
+    for count in data['counts']:
+        counts += json.loads(count)
+
+    wc = WordCloud(background_color='white', width=1200, height=400).generate_from_frequencies(frequencies=counts)
     
     wc_img = wc.to_image()
     

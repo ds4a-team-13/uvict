@@ -21,18 +21,6 @@ import datetime as dt
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.YETI], suppress_callback_exceptions=True)
 app.title='UVict'
 
-categories = dbc.Select(
-    id="class-picker",
-    options=[
-        {"label": "All", "value": -1},
-        {"label": "Narcóticos", "value": 1},
-        {"label": "Contrabando", "value": 2},
-        {"label": "Grupos armados", "value": 3},
-        {"label": "Delitos sexuales", "value": 4},
-    ],
-    value=-1,
-)
-
 navbar = dbc.NavbarSimple(children=[
     dbc.Col(dbc.NavbarBrand("UVict", className="ml-2")),
     # dbc.NavItem(dbc.NavLink("Modelo de clasificación", href="/semantic")),

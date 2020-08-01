@@ -31,11 +31,11 @@ options_bar = html.Div(
                  className='col-4',
                  children=[dcc.DatePickerRange(
                              id='date-picker',
-                             min_date_allowed=dt.datetime(2012,1,1),
-                             max_date_allowed=dt.datetime.now(),
-                             start_date=dt.datetime(2020,1,1),
-                             end_date=dt.datetime(2020, 6, 28),
-                             initial_visible_month=dt.datetime(2020, 6, 28)
+                             min_date_allowed=dt.date(2012,1,1),
+                             max_date_allowed=dt.datetime.now().date(),
+                             start_date=dt.date(2020, 5,1),
+                             end_date=dt.date(2020, 6, 28),
+                             initial_visible_month=dt.date(2020, 5, 1)
                              ),
                          ]
              ),
@@ -62,7 +62,7 @@ content = dbc.Container(children=[
     className='row',
     children=[
       html.H3(id='section-title', className='spatialTitle'),
-      html.P('A continuación usted puede ...', className='col-12'),
+      #html.P('A continuación usted puede ...', className='col-12'),
       html.Div(
         className='col-6 container',
         children=[
