@@ -16,6 +16,8 @@ import random, json
 import base64
 import dash
 from dash.exceptions import PreventUpdate
+import locale
+locale.setlocale(locale.LC_TIME, '')
 
 import my_app.utils as utils
 
@@ -41,7 +43,7 @@ colors = {'identity':'#4b6584', 'identity':'#a5b1c2',
           'identity':'#fa8231', 'identity':'#fc5c65',
           }
 
-def register_callbacks(app, df):
+def register_callbacks(app):
   
   @app.callback(
       Output('spatial_data', 'data'), 
@@ -96,6 +98,17 @@ def register_callbacks(app, df):
     fig_map = generate_map(data)
     return fig_map
 
+  @app.callback(
+    Output("section-title", "children"),
+    [Input('spatial_data', 'data')],
+	)
+  def generate_title(data):
+    print(data['start_date'])
+    
+    date1, date2 = dt.strptime(data['start_date'], "%Y-%m-%dT00:00:00"),  dt.strptime(data['end_date'], "%Y-%m-%dT00:00:00")
+    title = 'Noticias publicadas del {} al {}'.format(date1.strftime('%d de %B de %Y'), date2.strftime("%d de %B de %Y"))
+    
+    return title
 
   @app.callback(
       Output("trends", "children"),
@@ -114,11 +127,10 @@ def register_callbacks(app, df):
             """
 
     data = utils.db_get_df(query).dropna()
-    """
-    fig = px.line(data, x="fecha_publicacion", y='noticias', color='category_bl', color_discrete_map=colors)
-    
-    print('<< generate_trends')
-    return dcc.Graph(figure=fig, config={'displayModeBar': False} )
+    fig = px.line(data, x="fecha", y='noticias', color='categoria', color_discrete_map=colors)
+
+    graph = dcc.Graph(figure=fig, config={'displayModeBar': False} )
+    return graph
 
 
   def generate_wordcloud(data):
