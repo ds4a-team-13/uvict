@@ -19,7 +19,7 @@ from dash.exceptions import PreventUpdate
 from collections import Counter
 import locale
 
-locale.setlocale(local.LC_TIME, 'es_ES')
+locale.setlocale(locale.LC_TIME, 'es_ES')
 
 import my_app.utils as utils
 
